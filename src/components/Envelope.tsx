@@ -32,7 +32,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
     <div
       className={`envelope${
         open ? " open" : " new cursor-pointer"
-      } 3xl:w-[550px] 3xl:max-w-none 3xl:h-[366.66667px] h-[200px] w-[280px] sm:h-[265px] sm:w-[370px] sm:max-w-[380px] lg:h-[300px] lg:w-[450px] lg:max-w-none`}
+      } 3xl:w-[550px] 3xl:max-w-none 3xl:h-[366.66667px] h-[250px] w-[325px] sm:h-[265px] sm:w-[370px] sm:max-w-[380px] lg:h-[300px] lg:w-[450px] lg:max-w-none`}
       onClick={() => {
         setOpen(true);
         setHint(false);
@@ -45,7 +45,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
             <p className="font-en text-lg">Click to open</p>
           </div>
         )}
-        <div className="letter 3xl:w-[530px] 3xl:h-[346.66667px] h-[195px] w-[260px] px-2 py-1 sm:h-[260px] sm:w-[350px] md:px-4 md:py-3 lg:h-[290px] lg:w-[430px]">
+        <div className="letter 3xl:w-[530px] 3xl:h-[346.66667px] h-[245px] w-[305px] px-2 py-1 sm:h-[260px] sm:w-[350px] md:px-4 md:py-3 lg:h-[290px] lg:w-[430px]">
           {/* <h2>XX：</h2>
           <h3>XXXXXXX！</h3>
           <img
@@ -103,37 +103,39 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
             >
               {shareContent ? (
                 <div className="flex h-full flex-col items-center justify-center">
-                  <p className="font-chi text-lg font-bold">
+                  <p className="font-chi text-center text-lg font-bold">
                     把这封信交给他/她吧!
                   </p>
-                  <p className="font-en">
+                  <p className="font-en text-center">
                     Share this letter to your loved ones!
                   </p>
                   <div className="flex flex-row-reverse gap-1 pt-3">
                     <button
-                      className="font-en rounded-2xl bg-green-400 px-7 py-2"
+                      className="font-en rounded-2xl bg-green-400 px-4 py-1 text-xs lg:px-7 lg:text-base"
                       type="button"
                       onClick={() =>
-                        navigator
-                          .share({
-                            text: `这是我写给你的一封信! 感谢这一路的伴随 与神同行! 感恩有你! ❤\nHere's a letter from me to you! Thank You for walking with me alongside God in this journey! ❤\n\nhttps://thanksgiving.fgacyc.com/${shareContent} 💌🕊`,
-                          })
-                          .then(() =>
-                            navigator.clipboard
+                        navigator.share === undefined
+                          ? navigator.clipboard
                               .writeText(
                                 `这是我写给你的一封信! 感谢这一路的伴随 与神同行! 感恩有你! ❤\nHere's a letter from me to you! Thank You for walking with me alongside God in this journey! ❤\n\nhttps://thanksgiving.fgacyc.com/${shareContent} 💌🕊`,
                               )
-                              .then(() => console.log("Copied to clipboard!")),
-                          )
+                              .then(() =>
+                                alert(
+                                  "链接已复制成功! 发送给他/她吧!\nLink copied to clipboard! Send this letter to them!",
+                                ),
+                              )
+                          : navigator.share({
+                              text: `这是我写给你的一封信! 感谢这一路的伴随 与神同行! 感恩有你! ❤\nHere's a letter from me to you! Thank You for walking with me alongside God in this journey! ❤\n\nhttps://thanksgiving.fgacyc.com/${shareContent} 💌🕊`,
+                            })
                       }
                     >
                       <span className="font-chi font-bold">分享</span> Share
                     </button>
                     <button
-                      className="font-en rounded-2xl border-[1px] border-blue-100 bg-blue-200 px-4 py-2 text-black/80"
+                      className="font-en rounded-2xl border-[1px] border-blue-100 bg-blue-200 px-4 py-1 text-xs text-black/80 lg:px-4 lg:text-base"
                       onClick={() => setShareContent("")}
                     >
-                      返回 Back
+                      <span className="font-chi font-bold">返回</span> Back
                     </button>
                   </div>
                 </div>
@@ -250,8 +252,8 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
         </div>
         <div className="flap left-flap before:3xl:w-[269.27249px] before:3xl:h-[269.27249px] before:-top-[5px] before:h-[300px] before:w-[300px] before:sm:h-[388.90873px] before:sm:w-[388.90873px] before:lg:h-[275px] before:lg:w-[275px]"></div>
         <div className="flap right-flap before:3xl:w-[269.27249px] before:3xl:h-[269.27249px] before:-top-[5px] before:h-[300px] before:w-[300px] before:sm:h-[388.90873px] before:sm:w-[388.90873px] before:lg:h-[275px] before:lg:w-[275px]"></div>
-        <div className="flap bottom-flap before:3xl:w-[388.90873px] before:3xl:h-[388.90873px] before:h-[490px] before:w-[490px] before:rounded-tl-[25px] before:sm:h-[650px] before:sm:w-[650px] before:lg:h-[800px] before:lg:w-[820px] before:lg:rounded-tl-[50px]"></div>
-        <div className="flap top-flap before:3xl:w-[388.90873px] before:3xl:h-[388.90873px] before:h-[197px] before:w-[220px] before:sm:h-[263.27249px] before:sm:w-[263.27249px] before:lg:h-[318px] before:lg:w-[318px]"></div>
+        <div className="flap bottom-flap before:3xl:w-[388.90873px] before:3xl:h-[388.90873px] before:h-[470px] before:w-[370px] before:rounded-tl-[25px] before:sm:h-[650px] before:sm:w-[650px] before:lg:h-[800px] before:lg:w-[820px] before:lg:rounded-tl-[50px]"></div>
+        <div className="flap top-flap before:3xl:w-[388.90873px] before:3xl:h-[388.90873px] before:h-[230px] before:w-[230px] before:sm:h-[263.27249px] before:sm:w-[263.27249px] before:lg:h-[318px] before:lg:w-[318px]"></div>
       </div>
     </div>
   );

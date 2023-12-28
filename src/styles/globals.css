@@ -41,7 +41,7 @@ body {
 }
 
 :root {
-  --var-move: -470px;
+  --var-move: -630px;
 }
 
 @media (min-width: 640px) {
