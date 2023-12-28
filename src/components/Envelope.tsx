@@ -216,7 +216,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
             </Formik>
           ) : (
             <div className="flex h-full flex-col">
-              <p className="font-chi w-full text-center text-xl">
+              <p className="font-chi w-full text-center text-lg">
                 嘿，想对你说...
               </p>
 
