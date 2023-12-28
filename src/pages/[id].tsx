@@ -8,7 +8,6 @@ export type Card = {
   to: string;
   message: string;
   image: string | null;
-  error?: boolean;
 };
 
 const Gift: NextPage<Card> = (card) => {
@@ -30,10 +29,10 @@ export const getServerSideProps = (async (context) => {
   if (res.ok)
     return {
       props: {
-        from: card.card.from,
-        to: card.card.to,
-        message: card.card.message,
-        image: card.card.image,
+        from: card.card.from ?? "",
+        to: card.card.to ?? "",
+        message: card.card.message ?? "",
+        image: card.card.image ?? "",
       },
     };
   else
@@ -43,7 +42,6 @@ export const getServerSideProps = (async (context) => {
         to: "",
         message: "",
         image: "",
-        error: true,
       },
     };
 }) satisfies GetServerSideProps<Card>;
