@@ -34,7 +34,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
     <div
       className={`envelope${
         open ? " open" : " new cursor-pointer"
-      } 3xl:w-[550px] 3xl:max-w-none 3xl:h-[366.66667px] h-[250px] w-[325px] sm:h-[265px] sm:w-[370px] sm:max-w-[380px] lg:h-[300px] lg:w-[450px] lg:max-w-none`}
+      } h-[250px] w-[325px] sm:h-[265px] sm:w-[370px] sm:max-w-[380px] lg:h-[300px] lg:w-[450px] lg:max-w-none 3xl:h-[366.66667px] 3xl:w-[550px] 3xl:max-w-none`}
       onClick={() => {
         setOpen(true);
         setHint(false);
@@ -47,7 +47,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
             <p className="font-en text-lg">Click to open</p>
           </div>
         )}
-        <div className="letter 3xl:w-[530px] 3xl:h-[346.66667px] h-[245px] w-[305px] px-2 py-1 sm:h-[260px] sm:w-[350px] md:px-4 md:py-3 lg:h-[290px] lg:w-[430px]">
+        <div className="letter h-[245px] w-[305px] sm:h-[260px] sm:w-[350px] lg:h-[290px] lg:w-[430px] 3xl:h-[346.66667px] 3xl:w-[530px]">
           {/* <h2>XX：</h2>
           <h3>XXXXXXX！</h3>
           <img
@@ -111,15 +111,15 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
               {({ isSubmitting, errors }) =>
                 shareContent ? (
                   <div className="flex h-full flex-col items-center justify-center">
-                    <p className="font-chi text-center text-lg font-bold">
+                    <p className="text-center font-chi text-lg font-bold">
                       把这封信交给他/她吧!
                     </p>
-                    <p className="font-en text-center">
+                    <p className="text-center font-en">
                       Share this letter to your loved ones!
                     </p>
                     <div className="flex flex-row-reverse gap-1 pt-3">
                       <button
-                        className="font-en rounded-2xl bg-green-400 px-4 py-1 text-xs lg:px-7 lg:text-base"
+                        className="rounded-2xl bg-green-400 px-4 py-1 font-en text-xs lg:px-7 lg:text-base"
                         type="button"
                         onClick={() =>
                           navigator.share === undefined
@@ -140,7 +140,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                         <span className="font-chi font-bold">分享</span> Share
                       </button>
                       <button
-                        className="font-en rounded-2xl border-[1px] border-blue-100 bg-blue-200 px-4 py-1 text-xs text-black/80 lg:px-4 lg:text-base"
+                        className="rounded-2xl border-[1px] border-blue-100 bg-blue-200 px-4 py-1 font-en text-xs text-black/80 lg:px-4 lg:text-base"
                         onClick={() => setShareContent("")}
                       >
                         <span className="font-chi font-bold">返回</span> Back
@@ -148,16 +148,30 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                     </div>
                   </div>
                 ) : (
-                  <Form className="flex h-full flex-grow flex-col gap-2 text-xs lg:text-base">
+                  <Form className="relative flex h-full flex-grow flex-col gap-2 px-2 py-1 text-xs md:px-4 md:py-3 lg:text-base">
+                    {isSubmitting && (
+                      <div className="absolute inset-0 flex flex-row items-center justify-center bg-white/50">
+                        <Oval
+                          visible={true}
+                          height="50"
+                          width="50"
+                          ariaLabel="oval-loading"
+                          wrapperStyle={{}}
+                          wrapperClass=""
+                        />
+                      </div>
+                    )}
                     <div className="flex flex-row gap-2">
                       <label
                         htmlFor="from"
-                        className="font-en 3xl:w-[145px] min-w-[80px] text-black"
+                        className="min-w-[80px] font-en text-black 3xl:w-[145px]"
                       >
                         <span className="font-chi font-bold">来自</span> From
                       </label>
                       <Field
-                        className="font-chi w-full font-bold"
+                        className={`${
+                          errors.message ? "border-2 border-red-500 " : ""
+                        }font-chi w-full font-bold`}
                         name="from"
                         disabled={isSubmitting}
                         id="from"
@@ -166,12 +180,14 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                     <div className="flex flex-row gap-x-2">
                       <label
                         htmlFor="to"
-                        className="font-en 3xl:w-[145px] min-w-[80px] text-black"
+                        className="min-w-[80px] font-en text-black 3xl:w-[145px]"
                       >
                         <span className="font-chi font-bold">收信者</span> To
                       </label>
                       <Field
-                        className="font-chi w-full font-bold"
+                        className={`${
+                          errors.message ? "border-2 border-red-500 " : ""
+                        }font-chi w-full font-bold`}
                         name="to"
                         disabled={isSubmitting}
                         id="to"
@@ -180,7 +196,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                     <div className="flex flex-grow flex-row gap-x-2">
                       <label
                         htmlFor="message"
-                        className="font-en 3xl:w-[145px] min-w-[80px] text-black"
+                        className="min-w-[80px] font-en text-black 3xl:w-[145px]"
                       >
                         <span className="font-chi font-bold">
                           内容
@@ -189,7 +205,9 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                         Message
                       </label>
                       <Field
-                        className={`${errors.message}font-chi flex-grow resize-none font-bold`}
+                        className={`${
+                          errors.message ? "border-2 border-red-500 " : ""
+                        }font-chi flex-grow resize-none font-bold`}
                         name="message"
                         disabled={isSubmitting}
                         id="message"
@@ -197,7 +215,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                       />
                     </div>
                     <div className="flex flex-row gap-x-2">
-                      <div className="3xl:w-[145px] w-[80px]" />
+                      <div className="w-[80px] 3xl:w-[145px]" />
                       <input
                         name={"img"}
                         disabled={isSubmitting}
@@ -218,7 +236,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                       ) : (
                         <label
                           htmlFor="img"
-                          className="font-en flex-grow cursor-pointer rounded-full bg-white py-1 text-center text-black"
+                          className="flex-grow cursor-pointer rounded-full bg-white py-1 text-center font-en text-black"
                         >
                           <span className="font-chi font-bold">添加照片</span>{" "}
                           Add Pictures
@@ -227,9 +245,9 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                     </div>
                     <button
                       disabled={isSubmitting}
-                      className="font-en 3xl:text-lg flex flex-row justify-center bg-gradient-to-br from-[#fcfcfc] to-[#f4f5f5] py-1 disabled:opacity-70"
+                      className="flex flex-row justify-center bg-gradient-to-br from-[#fcfcfc] to-[#f4f5f5] py-1 font-en disabled:opacity-70 3xl:text-lg"
                     >
-                      {true ? (
+                      {isSubmitting ? (
                         <Oval
                           visible={true}
                           height="20"
@@ -249,8 +267,8 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
               }
             </Formik>
           ) : (
-            <div className="flex h-full flex-col">
-              <p className="font-chi w-full text-center text-lg">
+            <div className="flex h-full flex-col px-2 py-1 md:px-4 md:py-3">
+              <p className="w-full text-center font-chi text-lg">
                 嘿，想对你说...
               </p>
 
@@ -266,7 +284,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                 <div className="w-full overflow-y-scroll">
                   {message?.split("\n").map((m, i) => (
                     <p
-                      className="font-chi flex-grow text-sm lg:text-xl"
+                      className="flex-grow font-chi text-sm lg:text-xl"
                       key={i}
                     >
                       {m}
@@ -282,10 +300,10 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
             </div>
           )}
         </div>
-        <div className="flap left-flap before:3xl:w-[269.27249px] before:3xl:h-[269.27249px] before:-top-[5px] before:h-[300px] before:w-[300px] before:sm:h-[388.90873px] before:sm:w-[388.90873px] before:lg:h-[275px] before:lg:w-[275px]"></div>
-        <div className="flap right-flap before:3xl:w-[269.27249px] before:3xl:h-[269.27249px] before:-top-[5px] before:h-[300px] before:w-[300px] before:sm:h-[388.90873px] before:sm:w-[388.90873px] before:lg:h-[275px] before:lg:w-[275px]"></div>
-        <div className="flap bottom-flap before:3xl:w-[388.90873px] before:3xl:h-[388.90873px] before:h-[470px] before:w-[370px] before:rounded-tl-[25px] before:sm:h-[650px] before:sm:w-[650px] before:lg:h-[800px] before:lg:w-[820px] before:lg:rounded-tl-[50px]"></div>
-        <div className="flap top-flap before:3xl:w-[388.90873px] before:3xl:h-[388.90873px] before:h-[230px] before:w-[230px] before:sm:h-[263.27249px] before:sm:w-[263.27249px] before:lg:h-[318px] before:lg:w-[318px]"></div>
+        <div className="flap left-flap before:-top-[5px] before:h-[300px] before:w-[300px] before:sm:h-[388.90873px] before:sm:w-[388.90873px] before:lg:h-[275px] before:lg:w-[275px] before:3xl:h-[269.27249px] before:3xl:w-[269.27249px]"></div>
+        <div className="flap right-flap before:-top-[5px] before:h-[300px] before:w-[300px] before:sm:h-[388.90873px] before:sm:w-[388.90873px] before:lg:h-[275px] before:lg:w-[275px] before:3xl:h-[269.27249px] before:3xl:w-[269.27249px]"></div>
+        <div className="flap bottom-flap before:h-[470px] before:w-[370px] before:rounded-tl-[25px] before:sm:h-[650px] before:sm:w-[650px] before:lg:h-[800px] before:lg:w-[820px] before:lg:rounded-tl-[50px] before:3xl:h-[388.90873px] before:3xl:w-[388.90873px]"></div>
+        <div className="flap top-flap before:h-[230px] before:w-[230px] before:sm:h-[263.27249px] before:sm:w-[263.27249px] before:lg:h-[318px] before:lg:w-[318px] before:3xl:h-[388.90873px] before:3xl:w-[388.90873px]"></div>
       </div>
     </div>
   );
