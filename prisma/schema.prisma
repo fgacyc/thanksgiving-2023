@@ -14,7 +14,7 @@ model Card {
     id        String   @id @default(uuid())
     from      String
     to        String
-    message   String
+    message   String   @db.Text
     image     String?
     createdAt DateTime @default(now())
 }
