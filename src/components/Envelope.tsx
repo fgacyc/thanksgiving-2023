@@ -226,7 +226,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                 {image && (
                   <img
                     src={image}
-                    className="w-[70px] object-cover lg:w-[130px]"
+                    className="w-[90px] object-cover lg:w-[130px]"
                     alt={"image"}
                   />
                 )}
