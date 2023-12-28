@@ -21,21 +21,23 @@ export default async function handler(
     const id = req.query.id;
 
     try {
-      const card = await db.card.findUnique({
-        where: {
-          id: id as string,
-        },
-        select: {
-          from: true,
-          to: true,
-          message: true,
-          image: true,
-        },
-      });
-
-      if (card) res.status(200).json({ card: card });
-      if (!card) res.status(404).json({ error: "No Cards Found." });
-      res.status(200).json({ card: card });
+      await db.card
+        .findUnique({
+          where: {
+            id: id as string,
+          },
+          select: {
+            from: true,
+            to: true,
+            message: true,
+            image: true,
+          },
+        })
+        .then((data) =>
+          data
+            ? res.status(200).json({ card: data })
+            : res.status(404).json({ error: "No Card Found." }),
+        );
     } catch (err: unknown) {
       throw new Error(err as string);
     }
