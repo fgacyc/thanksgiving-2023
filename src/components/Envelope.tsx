@@ -220,18 +220,21 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                 嘿，想对你说...
               </p>
 
-              <div className="flex h-[calc(100%-60px)] flex-row gap-x-2 p-2 lg:gap-x-5">
+              <div className="flex h-[calc(100%-60px)] flex-row gap-x-2 p-1 lg:gap-x-5 lg:p-2">
                 {image && (
                   <img
                     src={image}
-                    className="h-full w-[85px] object-cover lg:w-[130px]"
+                    className="w-[70px] object-cover lg:w-[130px]"
                     alt={"image"}
                   />
                 )}
                 {image && <div className="h-full w-[1px] bg-gray-400" />}
                 <div className="w-full overflow-y-scroll">
                   {message?.split("\n").map((m, i) => (
-                    <p className="font-chi flex-grow text-xl" key={i}>
+                    <p
+                      className="font-chi flex-grow text-xs lg:text-xl"
+                      key={i}
+                    >
                       {m}
                     </p>
                   ))}
