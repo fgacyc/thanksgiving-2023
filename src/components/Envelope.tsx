@@ -141,7 +141,10 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                       </button>
                       <button
                         className="rounded-2xl border-[1px] border-blue-100 bg-blue-200 px-4 py-1 font-en text-xs text-black/80 lg:px-4 lg:text-base"
-                        onClick={() => setShareContent("")}
+                        onClick={() => {
+                          setShareContent("");
+                          setFile(undefined);
+                        }}
                       >
                         <span className="font-chi font-bold">返回</span> Back
                       </button>
