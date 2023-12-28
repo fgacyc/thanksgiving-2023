@@ -220,11 +220,11 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                 嘿，想对你说...
               </p>
 
-              <div className="flex h-[calc(100%-60px)] flex-row gap-x-5 p-2">
+              <div className="flex h-[calc(100%-60px)] flex-row gap-x-2 p-2 lg:gap-x-5">
                 {image && (
                   <img
                     src={image}
-                    className="h-full w-[130px] object-cover"
+                    className="h-full w-[85px] object-cover lg:w-[130px]"
                     alt={"image"}
                   />
                 )}
@@ -237,8 +237,8 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                   ))}
                 </div>
               </div>
-              <div className="absolute bottom-3 right-5">
-                <p className="font-en text-black">
+              <div className="absolute bottom-1 right-2 lg:bottom-3 lg:right-5">
+                <p className="font-en text-xs text-black">
                   <span className="font-chi">来自</span> From: {from}
                 </p>
               </div>
