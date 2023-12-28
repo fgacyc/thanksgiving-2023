@@ -17,7 +17,7 @@ const Gift: NextPage<Card> = (card) => {
 export const getServerSideProps = (async (context) => {
   // Fetch data from external API
   const res = await fetch(
-    `http://thanksgiving.fgacyc.com/api/getCard/${
+    `https://thanksgiving.fgacyc.com/api/getCard/${
       context.params?.id as string
     }`,
     {
