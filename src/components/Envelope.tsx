@@ -143,7 +143,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                   <div className="flex flex-row gap-2">
                     <label
                       htmlFor="from"
-                      className="font-en 3xl:w-[145px] w-[80px] text-black"
+                      className="font-en 3xl:w-[145px] min-w-[80px] text-black"
                     >
                       <span className="font-chi font-bold">来自</span> From
                     </label>
@@ -156,7 +156,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                   <div className="flex flex-row gap-x-2">
                     <label
                       htmlFor="to"
-                      className="font-en 3xl:w-[145px] w-[80px] text-black"
+                      className="font-en 3xl:w-[145px] min-w-[80px] text-black"
                     >
                       <span className="font-chi font-bold">收信者</span> To
                     </label>
@@ -169,7 +169,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                   <div className="flex flex-grow flex-row gap-x-2">
                     <label
                       htmlFor="message"
-                      className="font-en 3xl:w-[145px] w-[80px] text-black"
+                      className="font-en 3xl:w-[145px] min-w-[80px] text-black"
                     >
                       <span className="font-chi font-bold">内容</span> Message
                     </label>
@@ -181,7 +181,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                     />
                   </div>
                   <div className="flex flex-row gap-x-2">
-                    <div className="3xl:w-[145px] min-w-[80px]" />
+                    <div className="3xl:w-[145px] w-[80px]" />
                     <input
                       name={"img"}
                       // disabled={isSubmitting}
@@ -231,11 +231,11 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                 )}
                 {image && <div className="h-full w-[1px] bg-gray-400" />}
                 <div className="w-full overflow-y-scroll">
-                  {message
-                    ?.split("\n")
-                    .map((m) => (
-                      <p className="font-chi flex-grow text-xl">{m}</p>
-                    ))}
+                  {message?.split("\n").map((m, i) => (
+                    <p className="font-chi flex-grow text-xl" key={i}>
+                      {m}
+                    </p>
+                  ))}
                 </div>
               </div>
               <div className="absolute bottom-3 right-5">

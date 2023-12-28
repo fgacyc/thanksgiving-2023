@@ -3,7 +3,7 @@ import { Envelope } from "@/components/Envelope";
 
 function MainPage() {
   return (
-    <main className="flex h-[100dvh] w-screen flex-col items-center bg-gray-800 py-12 2xl:py-16">
+    <main className="3xl:py-16 flex h-[100dvh] w-screen flex-col items-center bg-[url('/TG_BG.jpg')] bg-cover bg-center bg-no-repeat py-10">
       <img
         src="/TG_Title.png"
         className="w-[170px] object-cover lg:w-[230px] 2xl:w-[270px]"
