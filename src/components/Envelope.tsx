@@ -67,7 +67,6 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
               }}
               onSubmit={async (values, actions) => {
                 actions.setSubmitting(true);
-                alert(JSON.stringify(values, null, 2));
                 if (file) {
                   await uploadFile(file).then(async (data) => {
                     console.log("file", file);
@@ -148,7 +147,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                       <span className="font-chi font-bold">来自</span> From
                     </label>
                     <Field
-                      className="font-chi flex-grow font-bold"
+                      className="font-chi w-full font-bold"
                       name="from"
                       id="from"
                     />
@@ -161,7 +160,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                       <span className="font-chi font-bold">收信者</span> To
                     </label>
                     <Field
-                      className="font-chi flex-grow font-bold"
+                      className="font-chi w-full font-bold"
                       name="to"
                       id="to"
                     />
