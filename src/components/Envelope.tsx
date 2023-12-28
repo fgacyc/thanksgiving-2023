@@ -226,7 +226,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                 {image && (
                   <img
                     src={image}
-                    className="w-[90px] object-cover lg:w-[130px]"
+                    className="w-[110px] object-cover lg:w-[130px]"
                     alt={"image"}
                   />
                 )}
@@ -234,7 +234,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                 <div className="w-full overflow-y-scroll">
                   {message?.split("\n").map((m, i) => (
                     <p
-                      className="font-chi flex-grow text-sm lg:text-xl"
+                      className="font-chi flex-grow text-base lg:text-xl"
                       key={i}
                     >
                       {m}
