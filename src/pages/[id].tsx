@@ -8,6 +8,7 @@ export type Card = {
   to: string;
   message: string;
   image: string | null;
+  error?: boolean;
 };
 
 const Gift: NextPage<Card> = (card) => {
@@ -25,16 +26,26 @@ export const getServerSideProps = (async (context) => {
     },
   );
   const card = await res.json();
-  //   console.log("GSP", card);
-  // Pass data to the page via props
-  return {
-    props: {
-      from: card.card.from,
-      to: card.card.to,
-      message: card.card.message,
-      image: card.card.image,
-    },
-  };
+
+  if (res.ok)
+    return {
+      props: {
+        from: card.card.from,
+        to: card.card.to,
+        message: card.card.message,
+        image: card.card.image,
+      },
+    };
+  else
+    return {
+      props: {
+        from: "",
+        to: "",
+        message: "",
+        image: "",
+        error: true,
+      },
+    };
 }) satisfies GetServerSideProps<Card>;
 
 export default Gift;

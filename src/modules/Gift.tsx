@@ -3,10 +3,17 @@
 import { Envelope } from "@/components/Envelope";
 import { type Card } from "@/pages/[id]";
 import { type NextPage } from "next";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export const GiftPage: NextPage<Card> = (props) => {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (props.error) void router.push("/");
+  }, []);
   return (
-    <main className="3xl:py-16 flex h-[100dvh] w-screen flex-col items-center bg-[url('/TG_BG.jpg')] bg-cover bg-center bg-no-repeat py-10">
+    <main className="flex h-[100dvh] w-screen flex-col items-center bg-[url('/TG_BG.jpg')] bg-cover bg-center bg-no-repeat py-10 3xl:py-16">
       <img
         src="/TG_Title.png"
         className="w-[170px] object-cover lg:w-[230px] 2xl:w-[270px]"

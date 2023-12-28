@@ -6,6 +6,8 @@
 import { type FunctionComponent, useState } from "react";
 import { Formik, Form, Field } from "formik";
 import { sendFetch, uploadFile } from "../helpers/uploadFile";
+import { Oval } from "react-loader-spinner";
+import * as Yup from "yup";
 
 interface EnvelopeProps {
   hint?: boolean;
@@ -65,6 +67,11 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                 to: "",
                 message: "",
               }}
+              validationSchema={Yup.object().shape({
+                from: Yup.string().required("Required."),
+                to: Yup.string().required("Required."),
+                message: Yup.string().required("Required."),
+              })}
               onSubmit={async (values, actions) => {
                 actions.setSubmitting(true);
                 if (file) {
@@ -101,120 +108,145 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                 }
               }}
             >
-              {shareContent ? (
-                <div className="flex h-full flex-col items-center justify-center">
-                  <p className="font-chi text-center text-lg font-bold">
-                    把这封信交给他/她吧!
-                  </p>
-                  <p className="font-en text-center">
-                    Share this letter to your loved ones!
-                  </p>
-                  <div className="flex flex-row-reverse gap-1 pt-3">
-                    <button
-                      className="font-en rounded-2xl bg-green-400 px-4 py-1 text-xs lg:px-7 lg:text-base"
-                      type="button"
-                      onClick={() =>
-                        navigator.share === undefined
-                          ? navigator.clipboard
-                              .writeText(
-                                `这是我写给你的一封信! 感谢这一路的伴随 与神同行! 感恩有你! ❤\nHere's a letter from me to you! Thank You for walking with me alongside God in this journey! ❤\n\nhttps://thanksgiving.fgacyc.com/${shareContent} 💌🕊`,
-                              )
-                              .then(() =>
-                                alert(
-                                  "链接已复制成功! 发送给他/她吧!\nLink copied to clipboard! Send this letter to them!",
-                                ),
-                              )
-                          : navigator.share({
-                              text: `这是我写给你的一封信! 感谢这一路的伴随 与神同行! 感恩有你! ❤\nHere's a letter from me to you! Thank You for walking with me alongside God in this journey! ❤\n\nhttps://thanksgiving.fgacyc.com/${shareContent} 💌🕊`,
-                            })
-                      }
-                    >
-                      <span className="font-chi font-bold">分享</span> Share
-                    </button>
-                    <button
-                      className="font-en rounded-2xl border-[1px] border-blue-100 bg-blue-200 px-4 py-1 text-xs text-black/80 lg:px-4 lg:text-base"
-                      onClick={() => setShareContent("")}
-                    >
-                      <span className="font-chi font-bold">返回</span> Back
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <Form className="flex h-full flex-grow flex-col gap-2 text-xs lg:text-base">
-                  <div className="flex flex-row gap-2">
-                    <label
-                      htmlFor="from"
-                      className="font-en 3xl:w-[145px] min-w-[80px] text-black"
-                    >
-                      <span className="font-chi font-bold">来自</span> From
-                    </label>
-                    <Field
-                      className="font-chi w-full font-bold"
-                      name="from"
-                      id="from"
-                    />
-                  </div>
-                  <div className="flex flex-row gap-x-2">
-                    <label
-                      htmlFor="to"
-                      className="font-en 3xl:w-[145px] min-w-[80px] text-black"
-                    >
-                      <span className="font-chi font-bold">收信者</span> To
-                    </label>
-                    <Field
-                      className="font-chi w-full font-bold"
-                      name="to"
-                      id="to"
-                    />
-                  </div>
-                  <div className="flex flex-grow flex-row gap-x-2">
-                    <label
-                      htmlFor="message"
-                      className="font-en 3xl:w-[145px] min-w-[80px] text-black"
-                    >
-                      <span className="font-chi font-bold">内容</span> Message
-                    </label>
-                    <Field
-                      className="font-chi flex-grow resize-none font-bold"
-                      name="message"
-                      id="message"
-                      as="textarea"
-                    />
-                  </div>
-                  <div className="flex flex-row gap-x-2">
-                    <div className="3xl:w-[145px] w-[80px]" />
-                    <input
-                      name={"img"}
-                      // disabled={isSubmitting}
-                      type="file"
-                      id="img"
-                      onChange={(e) => setFile(e.target.files?.[0])}
-                      className={`hidden`}
-                      accept="image/*"
-                    />
-                    {file ? (
-                      <label htmlFor="img">
-                        <img
-                          src={URL.createObjectURL(file)}
-                          alt={file.name}
-                          className="h-[75px] object-cover"
-                        />
-                      </label>
-                    ) : (
-                      <label
-                        htmlFor="img"
-                        className="font-en flex-grow cursor-pointer rounded-full bg-white py-1 text-center text-black"
+              {({ isSubmitting, errors }) =>
+                shareContent ? (
+                  <div className="flex h-full flex-col items-center justify-center">
+                    <p className="font-chi text-center text-lg font-bold">
+                      把这封信交给他/她吧!
+                    </p>
+                    <p className="font-en text-center">
+                      Share this letter to your loved ones!
+                    </p>
+                    <div className="flex flex-row-reverse gap-1 pt-3">
+                      <button
+                        className="font-en rounded-2xl bg-green-400 px-4 py-1 text-xs lg:px-7 lg:text-base"
+                        type="button"
+                        onClick={() =>
+                          navigator.share === undefined
+                            ? navigator.clipboard
+                                .writeText(
+                                  `这是我写给你的一封信! 感谢这一路的伴随 与神同行! 感恩有你! ❤\nHere's a letter from me to you! Thank You for walking with me alongside God in this journey! ❤\n\nhttps://thanksgiving.fgacyc.com/${shareContent} 💌🕊`,
+                                )
+                                .then(() =>
+                                  alert(
+                                    "链接已复制成功! 发送给他/她吧!\nLink copied to clipboard! Send this letter to them!",
+                                  ),
+                                )
+                            : navigator.share({
+                                text: `这是我写给你的一封信! 感谢这一路的伴随 与神同行! 感恩有你! ❤\nHere's a letter from me to you! Thank You for walking with me alongside God in this journey! ❤\n\nhttps://thanksgiving.fgacyc.com/${shareContent} 💌🕊`,
+                              })
+                        }
                       >
-                        <span className="font-chi font-bold">添加照片</span> Add
-                        Pictures
-                      </label>
-                    )}
+                        <span className="font-chi font-bold">分享</span> Share
+                      </button>
+                      <button
+                        className="font-en rounded-2xl border-[1px] border-blue-100 bg-blue-200 px-4 py-1 text-xs text-black/80 lg:px-4 lg:text-base"
+                        onClick={() => setShareContent("")}
+                      >
+                        <span className="font-chi font-bold">返回</span> Back
+                      </button>
+                    </div>
                   </div>
-                  <button className="font-en 3xl:text-lg bg-gradient-to-br from-[#fcfcfc] to-[#f4f5f5] py-1">
-                    <span className="font-chi font-bold">发送</span> Send
-                  </button>
-                </Form>
-              )}
+                ) : (
+                  <Form className="flex h-full flex-grow flex-col gap-2 text-xs lg:text-base">
+                    <div className="flex flex-row gap-2">
+                      <label
+                        htmlFor="from"
+                        className="font-en 3xl:w-[145px] min-w-[80px] text-black"
+                      >
+                        <span className="font-chi font-bold">来自</span> From
+                      </label>
+                      <Field
+                        className="font-chi w-full font-bold"
+                        name="from"
+                        disabled={isSubmitting}
+                        id="from"
+                      />
+                    </div>
+                    <div className="flex flex-row gap-x-2">
+                      <label
+                        htmlFor="to"
+                        className="font-en 3xl:w-[145px] min-w-[80px] text-black"
+                      >
+                        <span className="font-chi font-bold">收信者</span> To
+                      </label>
+                      <Field
+                        className="font-chi w-full font-bold"
+                        name="to"
+                        disabled={isSubmitting}
+                        id="to"
+                      />
+                    </div>
+                    <div className="flex flex-grow flex-row gap-x-2">
+                      <label
+                        htmlFor="message"
+                        className="font-en 3xl:w-[145px] min-w-[80px] text-black"
+                      >
+                        <span className="font-chi font-bold">
+                          内容
+                          <br />
+                        </span>{" "}
+                        Message
+                      </label>
+                      <Field
+                        className={`${errors.message}font-chi flex-grow resize-none font-bold`}
+                        name="message"
+                        disabled={isSubmitting}
+                        id="message"
+                        as="textarea"
+                      />
+                    </div>
+                    <div className="flex flex-row gap-x-2">
+                      <div className="3xl:w-[145px] w-[80px]" />
+                      <input
+                        name={"img"}
+                        disabled={isSubmitting}
+                        type="file"
+                        id="img"
+                        onChange={(e) => setFile(e.target.files?.[0])}
+                        className={`hidden`}
+                        accept="image/*"
+                      />
+                      {file ? (
+                        <label htmlFor="img">
+                          <img
+                            src={URL.createObjectURL(file)}
+                            alt={file.name}
+                            className="h-[75px] object-cover"
+                          />
+                        </label>
+                      ) : (
+                        <label
+                          htmlFor="img"
+                          className="font-en flex-grow cursor-pointer rounded-full bg-white py-1 text-center text-black"
+                        >
+                          <span className="font-chi font-bold">添加照片</span>{" "}
+                          Add Pictures
+                        </label>
+                      )}
+                    </div>
+                    <button
+                      disabled={isSubmitting}
+                      className="font-en 3xl:text-lg flex flex-row justify-center bg-gradient-to-br from-[#fcfcfc] to-[#f4f5f5] py-1 disabled:opacity-70"
+                    >
+                      {true ? (
+                        <Oval
+                          visible={true}
+                          height="20"
+                          width="20"
+                          ariaLabel="oval-loading"
+                          wrapperStyle={{}}
+                          wrapperClass=""
+                        />
+                      ) : (
+                        <>
+                          <span className="font-chi font-bold">发送</span> Send
+                        </>
+                      )}
+                    </button>
+                  </Form>
+                )
+              }
             </Formik>
           ) : (
             <div className="flex h-full flex-col">

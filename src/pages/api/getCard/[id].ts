@@ -8,12 +8,13 @@ import type { NextApiRequest, NextApiResponse } from "next";
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<{
-    card: {
+    card?: {
       from: string;
       to: string;
       message: string;
       image: string | null;
     } | null;
+    error?: string;
   }>,
 ) {
   if (req.method === "GET") {
@@ -31,6 +32,9 @@ export default async function handler(
           image: true,
         },
       });
+
+      if (card) res.status(200).json({ card: card });
+      if (!card) res.status(404).json({ error: "No Cards Found." });
       res.status(200).json({ card: card });
     } catch (err: unknown) {
       throw new Error(err as string);
