@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { GiftPage } from "@/modules/Gift";
 import { type NextPage, type GetServerSideProps } from "next";
+import Head from "next/head";
 
 export type Card = {
   from: string;
@@ -11,7 +12,22 @@ export type Card = {
 };
 
 const Gift: NextPage<Card> = (card) => {
-  return <GiftPage {...card} />;
+  return (
+    <>
+      <Head>
+        <meta property="og:image" content="/OG_IMAGE.jpg" />
+        <meta
+          property="og:image:secure_url"
+          content="https://thanksgiving.fgacyc.com/OG_IMAGE.jpg"
+        />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:image:width" content="400" />
+        <meta property="og:image:height" content="400" />
+        <meta property="og:image:alt" content="You Got Mail!" />
+      </Head>
+      <GiftPage {...card} />
+    </>
+  );
 };
 
 export const getServerSideProps = (async (context) => {
