@@ -15,6 +15,7 @@ const Gift: NextPage<Card> = (card) => {
   return (
     <>
       <Head>
+        <meta property="og:type" content="website" />
         <meta property="og:image" content="/OG_IMAGE.jpg" />
         <meta
           property="og:image:secure_url"
