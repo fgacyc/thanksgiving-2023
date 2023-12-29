@@ -24,7 +24,7 @@ export const uploadFile = async (file: File) => {
   // Files Parameters
   const params = {
     Bucket: S3_BUCKET,
-    Key: `${uuidv4()}.${file?.name.split(".")[1]}`,
+    Key: `thanksgiving-${uuidv4()}.${file?.name.split(".")[1]}`,
     Body: file,
   };
 
