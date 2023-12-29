@@ -279,13 +279,17 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
               <div className="flex h-[calc(100%-60px)] flex-row gap-x-2 p-1 lg:gap-x-5 lg:p-2">
                 {image && (
                   <img
-                    src={image}
+                    src={`/api/convertImage/${encodeURIComponent(image)}`}
                     className="w-[110px] object-cover lg:w-[130px]"
                     alt={"image"}
                   />
                 )}
                 {image && <div className="h-full w-[1px] bg-gray-400" />}
-                <div className="w-full overflow-y-scroll">
+                <div
+                  className={`w-full ${
+                    generatingImage ? "overflow-hidden" : "overflow-y-scroll"
+                  }`}
+                >
                   {message?.split("\n").map((m, i) => (
                     <p
                       className="flex-grow font-chi text-sm lg:text-xl"
@@ -306,16 +310,20 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                     setGeneratingImage(true);
                     await toJpeg(document.getElementById("main")!, {
                       quality: 1,
-                    }).then(function (dataUrl) {
-                      const link = document.createElement("a");
-                      const name = `${from}-${to}.jpeg`
-                        .replaceAll(" ", "-")
-                        .replaceAll("/", "_");
-                      link.download = name;
-                      link.href = dataUrl;
-                      link.click();
-                      setGeneratingImage(false);
-                    });
+                      // height: 1080,
+                      // width: 608,
+                    })
+                      .then(function (dataUrl: string) {
+                        const link = document.createElement("a");
+                        const name = `${from}-${to}.jpeg`
+                          .replaceAll(" ", "-")
+                          .replaceAll("/", "_");
+                        link.download = name;
+                        link.href = dataUrl;
+                        link.click();
+                        setGeneratingImage(false);
+                      })
+                      .catch((err: unknown) => console.log(err));
                   }}
                 />
                 <p className="font-en text-xs text-black">
