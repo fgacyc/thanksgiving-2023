@@ -154,7 +154,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                                   ),
                                 )
                             : navigator.share({
-                                text: `这是我写给你的一封信! 感谢这一路的伴随 与神同行! 感恩有你! ❤\nHere's a letter from me to you! Thank You for walking with me alongside God in this journey! ❤\n\nhttps://thanksgiving.fgacyc.com/${shareContent} 💌🕊`,
+                                text: `这是我写给你的一封信! 🔔\n感谢这一路的伴随 与神同行!🏃🏼🏃🏼‍♀\n感恩有你! ❤\nHere's a letter from me to you! 🔔\nThank You for walking with me alongside God in this journey! 🏃🏼🏃🏼‍♀❤\n\nhttps://thanksgiving.fgacyc.com/${shareContent} 💌🕊`,
                               })
                         }
                       >
