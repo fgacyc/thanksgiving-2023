@@ -8,7 +8,7 @@ import { Formik, Form, Field } from "formik";
 import { sendFetch, uploadFile } from "../helpers/uploadFile";
 import { Oval } from "react-loader-spinner";
 import * as Yup from "yup";
-import { AiTwotoneSave } from "react-icons/ai";
+import { AiOutlineSave } from "react-icons/ai";
 import { toJpeg } from "html-to-image";
 
 interface EnvelopeProps {
@@ -301,10 +301,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                 </div>
               </div>
               <div className="absolute bottom-2 flex w-full flex-row items-center justify-between pr-5 lg:bottom-3 lg:pr-8">
-                <AiTwotoneSave
-                  className={`text-[18px] lg:text-[25px]${
-                    generatingImage ? " opacity-0" : ""
-                  }`}
+                <button
                   onClick={async () => {
                     if (generatingImage) return;
                     setGeneratingImage(true);
@@ -325,7 +322,16 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                       })
                       .catch((err: unknown) => console.log(err));
                   }}
-                />
+                  className={`${
+                    generatingImage ? " opacity-0 " : ""
+                  }flex flex-row items-center gap-1 rounded-2xl border-[1px] border-blue-100 bg-blue-400 bg-opacity-70 px-2 py-1 transition-all duration-300 hover:bg-opacity-100`}
+                >
+                  <AiOutlineSave className="text-[16px] lg:text-[21px]" />
+                  <p className="font-en text-xs text-black">
+                    <span className="font-chi font-bold">储存卡片</span> Save
+                    Card
+                  </p>
+                </button>
                 <p className="font-en text-xs text-black">
                   <span className="font-chi">来自</span> From: {from}
                 </p>
