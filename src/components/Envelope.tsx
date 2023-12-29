@@ -8,6 +8,8 @@ import { Formik, Form, Field } from "formik";
 import { sendFetch, uploadFile } from "../helpers/uploadFile";
 import { Oval } from "react-loader-spinner";
 import * as Yup from "yup";
+import { AiTwotoneSave } from "react-icons/ai";
+import { toJpeg } from "html-to-image";
 
 interface EnvelopeProps {
   hint?: boolean;
@@ -24,11 +26,13 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
   from,
   message,
   image,
+  to,
 }) => {
   const [open, setOpen] = useState(false);
   const [hint, setHint] = useState(hintDefault);
   const [file, setFile] = useState<File | undefined>();
   const [shareContent, setShareContent] = useState("");
+  const [generatingImage, setGeneratingImage] = useState(false);
 
   return (
     <div
@@ -76,7 +80,6 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                 actions.setSubmitting(true);
                 if (file) {
                   await uploadFile(file).then(async (data) => {
-                    console.log("file", file);
                     await sendFetch(
                       values.from,
                       values.to,
@@ -84,7 +87,6 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                       `https://ywkl-image-storage.s3.ap-southeast-1.amazonaws.com/${data}`,
                     ).then(async (rt) => {
                       await rt.json().then((share) => {
-                        console.log("share", share);
                         setShareContent(share.id);
                         actions.setSubmitting(false);
                         actions.resetForm();
@@ -99,7 +101,6 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                     "",
                   ).then(async (rt) => {
                     await rt.json().then((share) => {
-                      console.log("share", share);
                       setShareContent(share.id);
                       actions.setSubmitting(false);
                       actions.resetForm();
@@ -226,7 +227,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                         id="img"
                         onChange={(e) => setFile(e.target.files?.[0])}
                         className={`hidden`}
-                        accept="image/*"
+                        accept="image/png, image/jpeg, image/jpg"
                       />
                       {file ? (
                         <label htmlFor="img">
@@ -270,7 +271,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
               }
             </Formik>
           ) : (
-            <div className="flex h-full flex-col px-2 py-1 md:px-4 md:py-3">
+            <div className="flex h-full w-full flex-col px-2 py-1 md:px-4 md:py-3">
               <p className="w-full text-center font-chi text-lg">
                 嘿，想对你说...
               </p>
@@ -295,7 +296,28 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                   ))}
                 </div>
               </div>
-              <div className="absolute bottom-1 right-2 lg:bottom-3 lg:right-5">
+              <div className="absolute bottom-2 flex w-full flex-row items-center justify-between pr-5 lg:bottom-3 lg:pr-8">
+                <AiTwotoneSave
+                  className={`text-[18px] lg:text-[25px]${
+                    generatingImage ? " opacity-0" : ""
+                  }`}
+                  onClick={async () => {
+                    if (generatingImage) return;
+                    setGeneratingImage(true);
+                    await toJpeg(document.getElementById("main")!, {
+                      quality: 1,
+                    }).then(function (dataUrl) {
+                      const link = document.createElement("a");
+                      const name = `${from}-${to}.jpeg`
+                        .replaceAll(" ", "-")
+                        .replaceAll("/", "_");
+                      link.download = name;
+                      link.href = dataUrl;
+                      link.click();
+                      setGeneratingImage(false);
+                    });
+                  }}
+                />
                 <p className="font-en text-xs text-black">
                   <span className="font-chi">来自</span> From: {from}
                 </p>

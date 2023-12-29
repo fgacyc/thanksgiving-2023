@@ -13,7 +13,10 @@ export const GiftPage: NextPage<Card> = (props) => {
     if (props.from === "" && props.to === "") void router.push("/");
   }, []);
   return (
-    <main className="flex h-[100dvh] w-screen flex-col items-center bg-[url('/TG_BG.jpg')] bg-cover bg-center bg-no-repeat py-10 3xl:py-16">
+    <main
+      id="main"
+      className="flex h-[100dvh] w-screen flex-col items-center bg-[url('/TG_BG.jpg')] bg-cover bg-center bg-no-repeat py-10 3xl:py-16"
+    >
       <img
         src="/TG_Title.png"
         className="w-[170px] object-cover lg:w-[230px] 2xl:w-[270px]"
