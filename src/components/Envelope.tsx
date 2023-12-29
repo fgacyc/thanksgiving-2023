@@ -325,10 +325,26 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
             </div>
           )}
         </div>
-        <div className="flap left-flap before:-top-[5px] before:h-[300px] before:w-[300px] before:sm:h-[388.90873px] before:sm:w-[388.90873px] before:lg:h-[275px] before:lg:w-[275px] before:3xl:h-[269.27249px] before:3xl:w-[269.27249px]"></div>
-        <div className="flap right-flap before:-top-[5px] before:h-[300px] before:w-[300px] before:sm:h-[388.90873px] before:sm:w-[388.90873px] before:lg:h-[275px] before:lg:w-[275px] before:3xl:h-[269.27249px] before:3xl:w-[269.27249px]"></div>
-        <div className="flap bottom-flap before:h-[470px] before:w-[370px] before:rounded-tl-[25px] before:sm:h-[650px] before:sm:w-[650px] before:lg:h-[800px] before:lg:w-[820px] before:lg:rounded-tl-[50px] before:3xl:h-[388.90873px] before:3xl:w-[388.90873px]"></div>
-        <div className="flap top-flap before:h-[230px] before:w-[230px] before:sm:h-[263.27249px] before:sm:w-[263.27249px] before:lg:h-[318px] before:lg:w-[318px] before:3xl:h-[388.90873px] before:3xl:w-[388.90873px]"></div>
+        <div
+          className={`${
+            generatingImage ? "opacity-0 " : ""
+          }flap left-flap before:-top-[5px] before:h-[300px] before:w-[300px] before:sm:h-[388.90873px] before:sm:w-[388.90873px] before:lg:h-[275px] before:lg:w-[275px] before:3xl:h-[269.27249px] before:3xl:w-[269.27249px]`}
+        ></div>
+        <div
+          className={`${
+            generatingImage ? "opacity-0 " : ""
+          }flap right-flap before:-top-[5px] before:h-[300px] before:w-[300px] before:sm:h-[388.90873px] before:sm:w-[388.90873px] before:lg:h-[275px] before:lg:w-[275px] before:3xl:h-[269.27249px] before:3xl:w-[269.27249px]`}
+        ></div>
+        <div
+          className={`${
+            generatingImage ? "opacity-0 " : ""
+          }flap bottom-flap before:h-[470px] before:w-[370px] before:rounded-tl-[25px] before:sm:h-[650px] before:sm:w-[650px] before:lg:h-[800px] before:lg:w-[820px] before:lg:rounded-tl-[50px] before:3xl:h-[388.90873px] before:3xl:w-[388.90873px]`}
+        ></div>
+        <div
+          className={`${
+            generatingImage ? "opacity-0 " : ""
+          }flap top-flap before:h-[230px] before:w-[230px] before:sm:h-[263.27249px] before:sm:w-[263.27249px] before:lg:h-[318px] before:lg:w-[318px] before:3xl:h-[388.90873px] before:3xl:w-[388.90873px]`}
+        ></div>
       </div>
     </div>
   );
