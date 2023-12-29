@@ -10,6 +10,7 @@ import { Oval } from "react-loader-spinner";
 import * as Yup from "yup";
 import { AiOutlineSave } from "react-icons/ai";
 import { toJpeg } from "html-to-image";
+import { toast } from "react-toastify";
 
 interface EnvelopeProps {
   hint?: boolean;
@@ -51,7 +52,13 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
             <p className="font-en text-lg">Click to open</p>
           </div>
         )}
-        <div className="letter h-[245px] w-[305px] sm:h-[260px] sm:w-[350px] lg:h-[290px] lg:w-[430px] 3xl:h-[346.66667px] 3xl:w-[530px]">
+        <div
+          className={`letter ${
+            generatingImage
+              ? "static h-[65dvh]"
+              : "h-[245px] w-[305px] sm:h-[260px] sm:w-[350px] lg:h-[290px] lg:w-[430px] 3xl:h-[346.66667px] 3xl:w-[530px]"
+          }`}
+        >
           {/* <h2>XX：</h2>
           <h3>XXXXXXX！</h3>
           <img
@@ -78,6 +85,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
               })}
               onSubmit={async (values, actions) => {
                 actions.setSubmitting(true);
+                const id = toast.loading("卡片上传中... ");
                 if (file) {
                   await uploadFile(file).then(async (data) => {
                     await sendFetch(
@@ -87,6 +95,12 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                       `https://ywkl-image-storage.s3.ap-southeast-1.amazonaws.com/${data}`,
                     ).then(async (rt) => {
                       await rt.json().then((share) => {
+                        toast.update(id, {
+                          render: "卡片上传成功! 🎉",
+                          type: "success",
+                          isLoading: false,
+                          autoClose: 2500,
+                        });
                         setShareContent(share.id);
                         actions.setSubmitting(false);
                         actions.resetForm();
@@ -101,6 +115,12 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                     "",
                   ).then(async (rt) => {
                     await rt.json().then((share) => {
+                      toast.update(id, {
+                        render: "卡片上传成功! 🎉",
+                        type: "success",
+                        isLoading: false,
+                        autoClose: 2500,
+                      });
                       setShareContent(share.id);
                       actions.setSubmitting(false);
                       actions.resetForm();
@@ -291,10 +311,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                   }`}
                 >
                   {message?.split("\n").map((m, i) => (
-                    <p
-                      className="flex-grow font-chi text-sm lg:text-xl"
-                      key={i}
-                    >
+                    <p className="font-chi text-sm lg:text-xl" key={i}>
                       {m}
                     </p>
                   ))}
@@ -304,23 +321,34 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                 <button
                   onClick={async () => {
                     if (generatingImage) return;
+                    const id = toast.loading("图片生成中... 📸");
                     setGeneratingImage(true);
-                    await toJpeg(document.getElementById("main")!, {
-                      quality: 1,
-                      // height: 1080,
-                      // width: 608,
-                    })
-                      .then(function (dataUrl: string) {
-                        const link = document.createElement("a");
-                        const name = `${from}-${to}.jpeg`
-                          .replaceAll(" ", "-")
-                          .replaceAll("/", "_");
-                        link.download = name;
-                        link.href = dataUrl;
-                        link.click();
-                        setGeneratingImage(false);
-                      })
-                      .catch((err: unknown) => console.log(err));
+                    setTimeout(
+                      () =>
+                        void toJpeg(document.getElementById("main")!, {
+                          quality: 1,
+                          // height: 1080,
+                          // width: 608,
+                        })
+                          .then(function (dataUrl: string) {
+                            const link = document.createElement("a");
+                            const name = `${from}-${to}.jpeg`
+                              .replaceAll(" ", "-")
+                              .replaceAll("/", "_");
+                            link.download = name;
+                            link.href = dataUrl;
+                            toast.update(id, {
+                              render: "图片生成成功! 🎉",
+                              type: "success",
+                              isLoading: false,
+                              autoClose: 2500,
+                            });
+                            link.click();
+                            setGeneratingImage(false);
+                          })
+                          .catch((err: unknown) => console.log(err)),
+                      500,
+                    );
                   }}
                   className={`${
                     generatingImage ? " opacity-0 " : ""
