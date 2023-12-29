@@ -21,8 +21,8 @@ const Gift: NextPage<Card> = (card) => {
           content="https://thanksgiving.fgacyc.com/OG_IMAGE.jpg"
         />
         <meta property="og:image:type" content="image/jpeg" />
-        <meta property="og:image:width" content="400" />
-        <meta property="og:image:height" content="400" />
+        <meta property="og:image:width" content="600" />
+        <meta property="og:image:height" content="600" />
         <meta property="og:image:alt" content="You Got Mail!" />
       </Head>
       <GiftPage {...card} />
