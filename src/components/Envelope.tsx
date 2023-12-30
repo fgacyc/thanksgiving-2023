@@ -340,22 +340,27 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                           // height: 1080,
                           // width: 608,
                         })
-                          .then(function (dataUrl: string) {
-                            const link = document.createElement("a");
-                            const name = `${from}-${to}.jpeg`
-                              .replaceAll(" ", "-")
-                              .replaceAll("/", "_");
-                            link.download = name;
-                            link.href = dataUrl;
-                            toast.update(id, {
-                              render: "图片生成成功! 🎉",
-                              type: "success",
-                              isLoading: false,
-                              autoClose: 2500,
+                          .then(async () => {
+                            await toJpeg(document.getElementById("main")!, {
+                              quality: 1,
+                            }).then(function (dataUrl: string) {
+                              const link = document.createElement("a");
+                              const name = `${from}-${to}.jpeg`
+                                .replaceAll(" ", "-")
+                                .replaceAll("/", "_");
+                              link.download = name;
+                              link.href = dataUrl;
+                              toast.update(id, {
+                                render: "图片生成成功! 🎉",
+                                type: "success",
+                                isLoading: false,
+                                autoClose: 2500,
+                              });
+                              link.click();
+                              setGeneratingImage(false);
                             });
-                            link.click();
-                            setGeneratingImage(false);
                           })
+
                           .catch((err: unknown) => console.log(err)),
                       500,
                     );
