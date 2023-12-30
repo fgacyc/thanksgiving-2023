@@ -291,20 +291,30 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
               }
             </Formik>
           ) : (
-            <div className="flex h-full w-full flex-col px-2 py-1 md:px-4 md:py-3">
+            <div className="relative flex h-full w-full flex-col px-2 py-1 md:px-4 md:py-3">
               <p className="w-full text-center font-chi text-lg">
                 嘿，想对你说...
               </p>
 
-              <div className="flex h-[calc(100%-60px)] flex-row gap-x-2 p-1 lg:gap-x-5 lg:p-2">
+              <div
+                className={`flex h-[calc(100%-60px)] ${
+                  generatingImage ? "flex-col items-center" : "flex-row"
+                } gap-x-2 p-1 lg:gap-x-5 lg:p-2`}
+              >
                 {image && (
                   <img
                     src={`/api/convertImage/${encodeURIComponent(image)}`}
-                    className="w-[110px] object-cover lg:w-[130px]"
+                    className={`${
+                      !generatingImage
+                        ? "w-[110px] lg:w-[130px]"
+                        : "h-[200px] w-full lg:h-[250px]"
+                    } object-cover`}
                     alt={"image"}
                   />
                 )}
-                {image && <div className="h-full w-[1px] bg-gray-400" />}
+                {!generatingImage && image && (
+                  <div className="h-full w-[1px] bg-gray-400" />
+                )}
                 <div
                   className={`w-full ${
                     generatingImage ? "overflow-hidden" : "overflow-y-scroll"
@@ -351,7 +361,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                     );
                   }}
                   className={`${
-                    generatingImage ? " opacity-0 " : ""
+                    generatingImage ? "opacity-0 " : ""
                   }flex flex-row items-center gap-1 rounded-2xl border-[1px] border-blue-100 bg-blue-400 bg-opacity-70 px-2 py-1 transition-all duration-300 hover:bg-opacity-100`}
                 >
                   <AiOutlineSave className="text-[16px] lg:text-[21px]" />
