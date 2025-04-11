@@ -9,8 +9,8 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <>
       <Head>
-        <title>Thanksgiving | FGACYC</title>
-        <meta name="description" content="Happy Thanksgiving!" />
+        <title>Welcome | FGACYC</title>
+        <meta name="description" content="Welcome to FGACYC!" />
       </Head>
       <Component {...pageProps} />
       <ToastContainer position="bottom-center" />

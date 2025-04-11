@@ -7,7 +7,7 @@ export default function Home() {
       <meta property="og:image" content="/OG_IMAGE_ORI.jpg" />
       <meta
         property="og:image:secure_url"
-        content="https://thanksgiving.fgacyc.com/OG_IMAGE_ORI.jpg"
+        content="/OG_IMAGE_ORI.jpg"
       />
       <meta property="og:image:type" content="image/jpeg" />
       <meta property="og:image:width" content="600" />

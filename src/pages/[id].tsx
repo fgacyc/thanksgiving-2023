@@ -19,7 +19,7 @@ const Gift: NextPage<Card> = (card) => {
         <meta property="og:image" content="/OG_IMAGE.jpg" />
         <meta
           property="og:image:secure_url"
-          content="https://thanksgiving.fgacyc.com/OG_IMAGE.jpg"
+          content={`/OG_IMAGE.jpg`}
         />
         <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:image:width" content="600" />
@@ -33,8 +33,9 @@ const Gift: NextPage<Card> = (card) => {
 
 export const getServerSideProps = (async (context) => {
   // Fetch data from external API
+  const origin = `${context.req.headers['x-forwarded-proto'] as string}://${context.req.headers.host}`;
   const res = await fetch(
-    `${context.req.headers['x-forwarded-proto'] as string}://${context.req.headers.host}/api/getCard/${context.params?.id as string
+    `${origin}/api/getCard/${context.params?.id as string
     }`,
     { method: "GET" },
   );
