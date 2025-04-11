@@ -34,12 +34,9 @@ const Gift: NextPage<Card> = (card) => {
 export const getServerSideProps = (async (context) => {
   // Fetch data from external API
   const res = await fetch(
-    `https://thanksgiving.fgacyc.com/api/getCard/${
-      context.params?.id as string
+    `${context.req.headers['x-forwarded-proto']}://${context.req.headers.host}/api/getCard/${context.params?.id as string
     }`,
-    {
-      method: "GET",
-    },
+    { method: "GET" },
   );
   const card = await res.json();
 

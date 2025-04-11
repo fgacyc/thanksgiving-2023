@@ -3,6 +3,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { db } from "@/server/db";
+import { cardTable } from "@/server/schema";
+import { eq } from "drizzle-orm";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -21,23 +23,11 @@ export default async function handler(
     const id = req.query.id;
 
     try {
-      await db.card
-        .findUnique({
-          where: {
-            id: id as string,
-          },
-          select: {
-            from: true,
-            to: true,
-            message: true,
-            image: true,
-          },
-        })
-        .then((data) =>
-          data
-            ? res.status(200).json({ card: data })
-            : res.status(404).json({ error: "No Card Found." }),
-        );
+      const rows = await db.select().from(cardTable).where(eq(cardTable.id, id as string));
+      if (rows.length === 0)
+        res.status(404).json({ error: "No card found." })
+      else
+        res.status(200).json({ card: rows[0] })
     } catch (err: unknown) {
       throw new Error(err as string);
     }

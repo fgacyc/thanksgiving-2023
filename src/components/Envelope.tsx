@@ -37,9 +37,8 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
 
   return (
     <div
-      className={`envelope${
-        open ? " open" : " new cursor-pointer"
-      } h-[250px] w-[325px] sm:h-[265px] sm:w-[370px] sm:max-w-[380px] lg:h-[300px] lg:w-[450px] lg:max-w-none 3xl:h-[366.66667px] 3xl:w-[550px] 3xl:max-w-none`}
+      className={`envelope ${open ? " open" : " new cursor-pointer"
+        } h-[250px] w-[325px] sm:h-[265px] sm:w-[370px] sm:max-w-[380px] lg:h-[300px] lg:w-[450px] lg:max-w-none 3xl:h-[366.66667px] 3xl:w-[550px] 3xl:max-w-none`}
       onClick={() => {
         setOpen(true);
         setHint(false);
@@ -53,11 +52,10 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
           </div>
         )}
         <div
-          className={`letter ${
-            generatingImage
-              ? "static h-[65dvh]"
-              : "h-[245px] w-[305px] sm:h-[260px] sm:w-[350px] lg:h-[290px] lg:w-[430px] 3xl:h-[346.66667px] 3xl:w-[530px]"
-          }`}
+          className={`letter ${generatingImage
+            ? "static h-[65dvh]"
+            : "h-[245px] w-[305px] sm:h-[260px] sm:w-[350px] lg:h-[290px] lg:w-[430px] 3xl:h-[346.66667px] 3xl:w-[530px]"
+            }`}
         >
           {/* <h2>XX：</h2>
           <h3>XXXXXXX！</h3>
@@ -142,20 +140,20 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                       <button
                         className="rounded-2xl bg-green-400 px-4 py-1 font-en text-xs lg:px-7 lg:text-base"
                         type="button"
-                        onClick={() =>
+                        onClick={() => {
+                          const message = `这是我写给你的一封信! 🔔\n感谢这一路的伴随 与神同行!🏃🏼🏃🏼‍♀\n感恩有你! ❤\nHere's a letter from me to you! 🔔\nThank You for walking with me alongside God in this journey! 🏃🏼🏃🏼‍♀❤\n\n${window.location.origin}/${shareContent} 💌🕊`
+
                           navigator.share === undefined
                             ? navigator.clipboard
-                                .writeText(
-                                  `这是我写给你的一封信! 感谢这一路的伴随 与神同行! 感恩有你! ❤\nHere's a letter from me to you! Thank You for walking with me alongside God in this journey! ❤\n\nhttps://thanksgiving.fgacyc.com/${shareContent} 💌🕊`,
-                                )
-                                .then(() =>
-                                  alert(
-                                    "链接已复制成功! 发送给他/她吧!\nLink copied to clipboard! Send this letter to them!",
-                                  ),
-                                )
-                            : navigator.share({
-                                text: `这是我写给你的一封信! 🔔\n感谢这一路的伴随 与神同行!🏃🏼🏃🏼‍♀\n感恩有你! ❤\nHere's a letter from me to you! 🔔\nThank You for walking with me alongside God in this journey! 🏃🏼🏃🏼‍♀❤\n\nhttps://thanksgiving.fgacyc.com/${shareContent} 💌🕊`,
-                              })
+                              .writeText(message)
+                              .then(() =>
+                                alert(
+                                  "链接已复制成功! 发送给他/她吧!\nLink copied to clipboard! Send this letter to them!",
+                                ),
+                              )
+                            : navigator.share({ text: message })
+                        }
+
                         }
                       >
                         <span className="font-chi font-bold">分享</span> Share
@@ -193,9 +191,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                         <span className="font-chi font-bold">来自</span> From
                       </label>
                       <Field
-                        className={`${
-                          errors.message ? "border-2 border-red-500 " : ""
-                        }font-chi w-full font-bold`}
+                        className={`${errors.message ? "border-2 border-red-500 " : ""} font-chi w-full font-bold`}
                         name="from"
                         disabled={isSubmitting}
                         id="from"
@@ -209,9 +205,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                         <span className="font-chi font-bold">收信者</span> To
                       </label>
                       <Field
-                        className={`${
-                          errors.message ? "border-2 border-red-500 " : ""
-                        }font-chi w-full font-bold`}
+                        className={`${errors.message ? "border-2 border-red-500 " : ""} font-chi w-full font-bold`}
                         name="to"
                         disabled={isSubmitting}
                         id="to"
@@ -229,9 +223,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                         Message
                       </label>
                       <Field
-                        className={`${
-                          errors.message ? "border-2 border-red-500 " : ""
-                        }font-chi flex-grow resize-none font-bold`}
+                        className={`${errors.message ? "border-2 border-red-500 " : ""} font-chi flex-grow resize-none font-bold`}
                         name="message"
                         disabled={isSubmitting}
                         id="message"
@@ -297,29 +289,23 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
               </p>
 
               <div
-                className={`flex h-[calc(100%-60px)] ${
-                  generatingImage ? "flex-col items-center" : "flex-row"
-                } gap-x-2 p-1 lg:gap-x-5 lg:p-2`}
+                className={`flex h-[calc(100%-60px)] ${generatingImage ? "flex-col items-center" : "flex-row"
+                  } gap-x-2 p-1 lg:gap-x-5 lg:p-2`}
               >
                 {image && (
                   <img
                     src={`/api/convertImage/${encodeURIComponent(image)}`}
-                    className={`${
-                      !generatingImage
-                        ? "w-[110px] lg:w-[130px]"
-                        : "h-[200px] w-full lg:h-[250px]"
-                    } object-cover`}
+                    className={`${!generatingImage
+                      ? "w-[110px] lg:w-[130px]"
+                      : "h-[200px] w-full lg:h-[250px]"
+                      } object-cover`}
                     alt={"image"}
                   />
                 )}
                 {!generatingImage && image && (
                   <div className="h-full w-[1px] bg-gray-400" />
                 )}
-                <div
-                  className={`w-full ${
-                    generatingImage ? "overflow-hidden" : "overflow-y-scroll"
-                  }`}
-                >
+                <div className={`w-full ${generatingImage ? "overflow-hidden" : "overflow-y-scroll"}`}>
                   {message?.split("\n").map((m, i) => (
                     <p className="font-chi text-sm lg:text-xl" key={i}>
                       {m}
@@ -365,9 +351,8 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                       500,
                     );
                   }}
-                  className={`${
-                    generatingImage ? "opacity-0 " : ""
-                  }flex flex-row items-center gap-1 rounded-2xl border-[1px] border-blue-100 bg-blue-400 bg-opacity-70 px-2 py-1 transition-all duration-300 hover:bg-opacity-100`}
+                  className={`${generatingImage ? "opacity-0 " : ""
+                    } flex flex-row items-center gap-1 rounded-2xl border-[1px] border-blue-100 bg-blue-400 bg-opacity-70 px-2 py-1 transition-all duration-300 hover:bg-opacity-100`}
                 >
                   <AiOutlineSave className="text-[16px] lg:text-[21px]" />
                   <p className="font-en text-xs text-black">
@@ -383,24 +368,20 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
           )}
         </div>
         <div
-          className={`${
-            generatingImage ? "opacity-0 " : ""
-          }flap left-flap before:-top-[5px] before:h-[300px] before:w-[300px] before:sm:h-[388.90873px] before:sm:w-[388.90873px] before:lg:h-[275px] before:lg:w-[275px] before:3xl:h-[269.27249px] before:3xl:w-[269.27249px]`}
+          className={`${generatingImage ? "opacity-0 " : ""
+            }flap left-flap before:-top-[5px] before:h-[300px] before:w-[300px] before:sm:h-[388.90873px] before:sm:w-[388.90873px] before:lg:h-[275px] before:lg:w-[275px] before:3xl:h-[269.27249px] before:3xl:w-[269.27249px]`}
         ></div>
         <div
-          className={`${
-            generatingImage ? "opacity-0 " : ""
-          }flap right-flap before:-top-[5px] before:h-[300px] before:w-[300px] before:sm:h-[388.90873px] before:sm:w-[388.90873px] before:lg:h-[275px] before:lg:w-[275px] before:3xl:h-[269.27249px] before:3xl:w-[269.27249px]`}
+          className={`${generatingImage ? "opacity-0 " : ""
+            }flap right-flap before:-top-[5px] before:h-[300px] before:w-[300px] before:sm:h-[388.90873px] before:sm:w-[388.90873px] before:lg:h-[275px] before:lg:w-[275px] before:3xl:h-[269.27249px] before:3xl:w-[269.27249px]`}
         ></div>
         <div
-          className={`${
-            generatingImage ? "opacity-0 " : ""
-          }flap bottom-flap before:h-[470px] before:w-[370px] before:rounded-tl-[25px] before:sm:h-[650px] before:sm:w-[650px] before:lg:h-[800px] before:lg:w-[820px] before:lg:rounded-tl-[50px] before:3xl:h-[388.90873px] before:3xl:w-[388.90873px]`}
+          className={`${generatingImage ? "opacity-0 " : ""
+            }flap bottom-flap before:h-[470px] before:w-[370px] before:rounded-tl-[25px] before:sm:h-[650px] before:sm:w-[650px] before:lg:h-[800px] before:lg:w-[820px] before:lg:rounded-tl-[50px] before:3xl:h-[388.90873px] before:3xl:w-[388.90873px]`}
         ></div>
         <div
-          className={`${
-            generatingImage ? "opacity-0 " : ""
-          }flap top-flap before:h-[230px] before:w-[230px] before:sm:h-[263.27249px] before:sm:w-[263.27249px] before:lg:h-[318px] before:lg:w-[318px] before:3xl:h-[388.90873px] before:3xl:w-[388.90873px]`}
+          className={`${generatingImage ? "opacity-0 " : ""
+            }flap top-flap before:h-[230px] before:w-[230px] before:sm:h-[263.27249px] before:sm:w-[263.27249px] before:lg:h-[318px] before:lg:w-[318px] before:3xl:h-[388.90873px] before:3xl:w-[388.90873px]`}
         ></div>
       </div>
     </div>

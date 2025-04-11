@@ -4,6 +4,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { db } from "@/server/db";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { cardTable } from "@/server/schema";
 
 export default async function handler(
   req: NextApiRequest,
@@ -14,19 +15,17 @@ export default async function handler(
     console.log(req.body);
 
     try {
-      const card = await db.card.create({
-        data: {
-          from: from,
-          to: to,
-          message: message,
-          image: image,
-        },
-        select: {
-          id: true,
-        },
-      });
+      const rows = await db.insert(cardTable).values({
+        from: from,
+        to: to,
+        message: message,
+        image: image,
+      }).returning({ id: cardTable.id });
 
-      res.status(200).json({ id: card.id });
+      if (rows.length === 0)
+        throw new Error('failed to insert db')
+
+      res.status(200).json({ id: rows[0]!.id });
     } catch (err: unknown) {
       throw new Error(err as string);
     }

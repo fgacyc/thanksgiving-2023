@@ -3,13 +3,13 @@ import { Envelope } from "@/components/Envelope";
 
 function MainPage() {
   return (
-    <main className="3xl:py-16 flex h-[100dvh] w-screen flex-col items-center bg-[url('/TG_BG.jpg')] bg-cover bg-center bg-no-repeat py-10">
+    <main className="3xl:py-16 flex h-[100dvh] w-screen flex-col items-center bg-[url(/paper-texture-min.jpg)] bg-cover bg-center bg-no-repeat py-10">
       <img
-        src="/TG_Title.png"
-        className="w-[170px] object-cover lg:w-[230px] 2xl:w-[270px]"
+        src="/welcomehome_logo.png"
+        className="object-cover lg:w-[230px] 2xl:w-[270px]"
       />
       <Envelope hint sending />
-      <div className="3xl:bottom-20 absolute bottom-[12.5%] left-1/2 flex w-full -translate-x-1/2 flex-col text-xl text-white lg:bottom-10">
+      <div className="3xl:bottom-20 absolute bottom-[12.5%] left-1/2 flex w-full -translate-x-1/2 flex-col text-xl text-[#BF1E2E] lg:bottom-10">
         <p className="font-chi w-full text-center text-lg lg:text-4xl">
           写一段感恩的话语，
           <br />
