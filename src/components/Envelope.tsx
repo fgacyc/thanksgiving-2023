@@ -140,21 +140,20 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                       <button
                         className="rounded-2xl bg-green-400 px-4 py-1 font-en text-xs lg:px-7 lg:text-base"
                         type="button"
-                        onClick={() => {
+                        onClick={async () => {
                           const message = `这是我写给你的一封信! 🔔\n感谢这一路的伴随 与神同行!🏃🏼🏃🏼‍♀\n感恩有你! ❤\nHere's a letter from me to you! 🔔\nThank You for walking with me alongside God in this journey! 🏃🏼🏃🏼‍♀❤\n\n${window.location.origin}/${shareContent} 💌🕊`
 
-                          navigator.share === undefined
-                            ? navigator.clipboard
+                          if (navigator.share)
+                            await navigator.share({ text: message })
+                          else
+                            await navigator.clipboard
                               .writeText(message)
                               .then(() =>
                                 alert(
                                   "链接已复制成功! 发送给他/她吧!\nLink copied to clipboard! Send this letter to them!",
                                 ),
                               )
-                            : navigator.share({ text: message })
-                        }
-
-                        }
+                        }}
                       >
                         <span className="font-chi font-bold">分享</span> Share
                       </button>
