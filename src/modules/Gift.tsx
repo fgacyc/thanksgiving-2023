@@ -19,7 +19,7 @@ export const GiftPage: NextPage<Card> = (props) => {
     >
       <img
         src="/welcomehome_logo.png"
-        className="object-cover lg:w-[230px] 2xl:w-[270px]"
+        className="w-[270px] sm:w-auto object-cover lg:w-[230px] 2xl:w-[270px]"
       />
 
       <Envelope hint {...props} />

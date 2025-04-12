@@ -16,10 +16,10 @@ const Gift: NextPage<Card> = (card) => {
     <>
       <Head>
         <meta property="og:type" content="website" />
-        <meta property="og:image" content="/OG_IMAGE.jpg" />
+        <meta property="og:image" content="/OG_IMAGE_WELCOME_HOME.jpg" />
         <meta
           property="og:image:secure_url"
-          content={`/OG_IMAGE.jpg`}
+          content={`/OG_IMAGE_WELCOME_HOME.jpg`}
         />
         <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:image:width" content="600" />

@@ -141,7 +141,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                         className="rounded-2xl bg-green-400 px-4 py-1 font-en text-xs lg:px-7 lg:text-base"
                         type="button"
                         onClick={async () => {
-                          const message = `这是我写给你的一封信! 🔔\n感谢这一路的伴随 与神同行!🏃🏼🏃🏼‍♀\n感恩有你! ❤\nHere's a letter from me to you! 🔔\nThank You for walking with me alongside God in this journey! 🏃🏼🏃🏼‍♀❤\n\n${window.location.origin}/${shareContent} 💌🕊`
+                          const message = `这是我写给你的一封信! 🔔\nHere's a letter from me to you! 🔔\n\n${window.location.origin}/${shareContent} 💌🕊`
 
                           if (navigator.share)
                             await navigator.share({ text: message })

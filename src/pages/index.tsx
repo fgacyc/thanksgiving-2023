@@ -4,10 +4,10 @@ export default function Home() {
   return (
     <>
       <meta property="og:type" content="website" />
-      <meta property="og:image" content="/OG_IMAGE_ORI.jpg" />
+      <meta property="og:image" content="/OG_IMAGE_ORI_WELCOME_HOME.jpg" />
       <meta
         property="og:image:secure_url"
-        content="/OG_IMAGE_ORI.jpg"
+        content="/OG_IMAGE_ORI_WELCOME_HOME.jpg"
       />
       <meta property="og:image:type" content="image/jpeg" />
       <meta property="og:image:width" content="600" />
