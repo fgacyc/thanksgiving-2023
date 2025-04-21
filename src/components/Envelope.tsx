@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
+import { env } from "@/env";
 import { type FunctionComponent, useState } from "react";
 import { Formik, Form, Field } from "formik";
 import { sendFetch, uploadFile } from "../helpers/uploadFile";
@@ -90,7 +91,7 @@ export const Envelope: FunctionComponent<EnvelopeProps> = ({
                       values.from,
                       values.to,
                       values.message,
-                      `https://ywkl-image-storage.s3.ap-southeast-1.amazonaws.com/${data}`,
+                      `https://${env.NEXT_PUBLIC_AWS_S3_BUCKET}.s3.${env.NEXT_PUBLIC_AWS_REGION}.amazonaws.com/${data}`,
                     ).then(async (rt) => {
                       await rt.json().then((share) => {
                         toast.update(id, {
